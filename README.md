@@ -135,36 +135,8 @@ financial-fraud-analytics/
 
 ---
 
-## 🚀 How to Replicate This Project
-
-### Prerequisites
-1. **Python 3.9+** with `pandas`, `numpy`, and `pyodbc` installed.
-2. **Microsoft SQL Server Management Studio (SSMS)** installed locally or on a server.
-3. **Power BI Desktop** (latest release).
-
-### Quick Start
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/your-username/financial-fraud-analytics.git
-   cd financial-fraud-analytics
-   ```
-
-2. **Run Data Preparation Pipeline:**
-   ```bash
-   python scripts/python/01_data_cleaning.py
-   ```
-
-3. **Execute SQL Server Scripts:**
-   * Open SSMS and run `scripts/sql/01_create_database_staging.sql`.
-   * Execute `scripts/sql/02_create_star_schema_views.sql` to generate the analytical views.
-
-4. **Launch Power BI:**
-   * Open `powerbi/Fraud_Analytics_Report.pbix`, update the SQL Server instance connection string, and refresh the data model.
-
----
-
 ## 👨‍💻 Author & Contact
 
-* **Project Owner:** [Your Name]
-* **LinkedIn:** [Your LinkedIn Profile URL]
-* **Portfolio / Upwork:** [Your Portfolio or Upwork Profile Link]
+* **Project Owner:** [Alejandro Florez]
+* **LinkedIn:** [Alejandro Florez](https://www.linkedin.com/in/alejandroflorezl/?locale=en_US)  
+* **Portfolio / Upwork:** [_]

@@ -137,6 +137,6 @@ financial-fraud-analytics/
 
 ## 👨‍💻 Author & Contact
 
-* **Project Owner:** [Alejandro Florez]
+* **Project Owner:** Alejandro Florez
 * **LinkedIn:** [Alejandro Florez](https://www.linkedin.com/in/alejandroflorezl/?locale=en_US)  
-* **Portfolio / Upwork:** [_]
+* **Portfolio / Upwork:** 

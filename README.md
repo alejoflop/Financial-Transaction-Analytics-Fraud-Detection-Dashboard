@@ -1,23 +1,33 @@
 # 💳 Financial Transaction Analytics & Fraud Detection Dashboard
 
-[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![SQL Server](https://img.shields.io/badge/SQL_Server-SSMS_22-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
-[![Power BI](https://img.shields.io/badge/Power_BI-DAX_%26_Power_Query-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
-[![Project Status](https://img.shields.io/badge/Status-Phase_5_In_Progress-00A86B?style=for-the-badge)](#-project-roadmap--phase-status)
-
 An end-to-end financial data engineering and business intelligence solution designed to ingest semi-structured transaction data, construct a robust SQL relational star schema, and deliver an interactive executive dashboard for fraud detection and risk analytics.
 
 ---
 
 ## 📌 Executive Summary
 
-Financial institutions handle millions of transactional events daily, where early detection of high-risk anomalies directly mitigates monetary loss and regulatory risk. This project establishes a repeatable data pipeline and interactive analytics environment that combines transactional data, credit card metadata, user demographics, Merchant Category Codes (MCC), and confirmed fraud ground-truth labels.
+Financial institutions handle millions of transactional events daily, where early detection of high-risk anomalies directly mitigates monetary loss and regulatory risk. This project establishes a repeatable data pipeline and interactive analytics environment combining transactional data, credit card metadata, user demographics, Merchant Category Codes (MCC), and confirmed fraud ground-truth labels.
 
 ### Key Objectives
 * **Data Unification:** Ingest and clean disparate structured (`.csv`) and semi-structured (`.json`) datasets into a unified analytical environment.
 * **Dimensional Modeling:** Architect an optimized Star Schema in SQL Server (SSMS) utilizing dedicated staging tables and production views.
 * **Risk Intelligence:** Isolate key fraud drivers across merchant categories (MCCs), geographical anomalies, spending tiers, and card types.
-* **Executive Decision Support:** Build a multi-page Power BI dashboard with automated DAX metrics for real-time risk tracking.
+* **Executive Decision Support:** Build a multi-page Power BI dashboard with automated DAX metrics and VertiPaq model optimizations for real-time risk tracking.
+
+---
+
+## 📊 Data Source
+
+The raw datasets used in this project originate from Kaggle's public financial datasets:
+* **Source:** [Financial Transactions Dataset: Analytics]([https://www.kaggle.com/](https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets))
+* **Contents:**
+  * `transactions_data.csv` (13.3M+ records)
+  * `cards_data.csv` (6.1K card metadata records)
+  * `users_data.csv` (2.0K customer demographic records)
+  * `mcc_codes.json` (Merchant Category Code lookup dictionary)
+  * `train_fraud_labels.json` (Ground-truth fraud classification flags)
+
+> *Note: Due to file size constraints, raw data files are not hosted in this repository. Download the dataset directly from Kaggle and place the raw files in a local `data/raw/` folder before running the Jupyter Notebook.*
 
 ---
 
@@ -26,23 +36,23 @@ Financial institutions handle millions of transactional events daily, where earl
 | Domain | Tool / Technology | Usage Description |
 | :--- | :--- | :--- |
 | **ETL & Data Wrangling** | `Python` (`Pandas`, `NumPy`, `json`) | Ingestion, JSON flattening, type casting, missing value treatment, and clean CSV export. |
-| **Database & Modeling** | `SQL Server` (`SSMS 22`, `pyodbc`) | Staging table creation, relational keys, index optimization, and Star Schema analytical views. |
-| **Analytics & BI** | `Power BI` (`DAX`, `Power Query`) | Import Mode connection, data modeling ($1:*$), VertiPaq engine optimization, and executive dashboards. |
-| **Version Control** | `Git` / `GitHub` | Repository tracking, code versioning, and documentation. |
+| **Database & Modeling** | `SQL Server` (`SSMS 22`) | Staging table creation, relational keys, index optimization, and Star Schema analytical views. |
+| **Analytics & BI** | `Power BI` (`DAX`, `Power Query`) | Import Mode connection, data modeling ($1:*$), VertiPaq engine optimization, and interactive executive reporting. |
+| **Version Control & Sharing** | `Git` / `GitHub` | Repository tracking, code versioning, `.pbit` template distribution, and `.pdf` dashboard export. |
 
 ---
 
 ## 🗺️ System Architecture & Workflow
 
 ```text
-[ Raw Files ] ──(Python / Pandas)──> [ Clean CSVs ] ✅ ──(Bulk Insert / pyodbc)──> [ SSMS: Staging ] ✅
-(CSV / JSON)         COMPLETED                                                        Clean Raw Tables
-                                                                                                 │
-                                                                                      (SQL DDL & Views)
-                                                                                                 ▼
-[ Power BI Dashboard ] <──(Import Mode)── [ SSMS: Star Schema ] ✅ <────────────── [ SSMS: Data Mart ] ✅
-  Visualization & DAX                       Fact & Dimensions                      Views / Transformation
-  (Model Optimized ⚡)                       & Measures Created ✅
+[ Raw Kaggle Data ] ──(Python / Pandas)──> [ Clean CSVs ] ✅ ──(Bulk Insert)──> [ SSMS: Staging ] ✅
+ (CSV / JSON)           COMPLETED                                                Clean Raw Tables
+                                                                                         │
+                                                                              (SQL DDL & Views)
+                                                                                         ▼
+[ Power BI Dashboard ] <──(Import Mode)── [ SSMS: Star Schema ] ✅ <────────── [ SSMS: Data Mart ] ✅
+  Published (.pbit & .pdf) ✅               Fact & Dimensions                  Views / Transformation
+  Dashboard Built ✅                         & Measures Created ✅
 ```
 
 ---
@@ -54,7 +64,7 @@ Financial institutions handle millions of transactional events daily, where earl
 
 * **JSON Flattening:** Parsed and normalized semi-structured `mcc_codes.json` and `train_fraud_labels.json` into tabular DataFrames.
 * **Data Sanitization:** Standardized transaction amounts (`amount`), enforced strict `datetime` formatting, and handled null/duplicate entries.
-* **Data Export:** Exported standardized CSV files to the `/data/cleaned/` directory using relative, cross-platform paths.
+* **Data Export:** Exported standardized CSV files using relative, cross-platform paths.
 
 ---
 
@@ -62,12 +72,7 @@ Financial institutions handle millions of transactional events daily, where earl
 **STATUS:** `COMPLETED` ✅
 
 * **Database DDL:** Provisioned core database `FraudAnalyticsDB` in Microsoft SQL Server Management Studio (SSMS 22).
-* **Staging Area (`stg_`):** Bulk loaded 13.3M+ records into target staging tables:
-  * `stg_transactions` (13,305,915 rows)
-  * `stg_fraud_labels` (8,914,963 rows)
-  * `stg_cards` (6,146 rows)
-  * `stg_users` (2,000 rows)
-  * `stg_mcc` (109 rows)
+* **Staging Area (`stg_`):** Bulk loaded 13.3M+ records into target staging tables (`stg_transactions`, `stg_fraud_labels`, `stg_cards`, `stg_users`, `stg_mcc`).
 * **Performance Tuning:** Defined Primary Keys (PKs) and created non-clustered indexes on `client_id`, `card_id`, `mcc`, and `date` to optimize analytical joins.
 
 ---
@@ -90,31 +95,19 @@ Financial institutions handle millions of transactional events daily, where earl
 
 * **Import Mode Connection:** Connected Power BI to SQL Server views (`vw_`).
 * **Star Schema Relationship Validation:** Enforced single-direction 1-to-Many ($1:*$) relationships across all dimensions (`vw_Dim_Users`, `vw_Dim_Cards`, `vw_Dim_MCC`, `vw_Dim_Calendar`) to `vw_Fact_Transactions`.
-* **Centralized DAX Measures (`_Measures`):**
-  * **Total Transactions:** `COUNTROWS(vw_Fact_Transactions)`
-  * **Total Processed Volume ($):** `SUM(vw_Fact_Transactions[Amount])`
-  * **Avg Transaction Amount ($):** `AVERAGE(vw_Fact_Transactions[Amount])`
-  * **Total Fraud Transactions:** `CALCULATE(COUNTROWS(...), Is_Fraud = 1)`
-  * **Total Fraud Losses ($):** `CALCULATE(SUM(...), Is_Fraud = 1)`
-  * **% Fraud Rate (Volume):** `DIVIDE([Total Fraud Losses ($)], [Total Processed Volume ($)], 0)`
-  * **% Fraud Rate (Transactions):** `DIVIDE([Total Fraud Transactions], [Total Transactions], 0)`
+* **Centralized DAX Measures (`_Measures`):** Created automated metrics for Volume ($), Transaction Counts, Fraud Losses ($), and Fraud Rate (%).
 
 ---
 
 ### ⑤ Phase 5: Interactive Visualization & Executive Dashboard
-**STATUS:** `IN PROGRESS` 🟡
+**STATUS:** `COMPLETED` ✅
 
-* **VertiPaq Model Optimization:** ⚡ *Completed*
-  * Disabled global Auto Date/Time tables to prevent RAM overhead.
-  * Marked `vw_Dim_Calendar` as the official Date Table.
-  * Removed high-cardinality `Transaction_ID` and exact timestamp columns to drastically shrink dictionary size across 13.3M+ rows.
-  * Converted currency fields to `Fixed Decimal Number` (`Currency`) for tight encoding.
-  * Set geographic categories (`Latitude`, `Longitude`, `Merchant_State`) and hid foreign key fields.
-* **UI/UX Wireframing & Layout:** ✏️ *Sketched on Paper*
-* **Visual Build & DAX Integration:** ⏳ *In Progress*
-  * **Page 1 — Executive Overview:** High-level KPIs, processing volume trends, and macro fraud rates.
-  * **Page 2 — Risk & Anomaly Analysis:** Hour vs. Day-of-Week risk heatmaps, top high-risk MCC categories, and transaction distribution spikes.
-  * **Page 3 — Customer Demographics & Behavior:** User segmentation by income tier, age cohort, credit utilization rates, and spending patterns.
+* **VertiPaq Model Optimization:** Disabled Auto Date/Time, marked official Date Table, changed currency fields to `Fixed Decimal Number`, set geographic categories, and removed high-cardinality columns.
+* **Multi-Page Executive Dashboard:**
+  * **Page 1 — Executive Overview:** High-level KPIs, total processed volume trends vs. fraud losses, and macro fraud rate indicators.
+  * **Page 2 — Risk & Anomaly Analysis:** Hour-of-day vs. Day-of-week heatmaps, high-risk Merchant Category Codes (MCCs), and error type correlations.
+  * **Page 3 — Customer Demographics & Behavior:** Customer segmentation by income tier, age groups, credit score tiers, and dark web card flags.
+* **Deliverable Sharing:** Exported lightweight template (`.pbit`) for repository deployment alongside a static executive report (`.pdf`).
 
 ---
 
@@ -123,24 +116,12 @@ Financial institutions handle millions of transactional events daily, where earl
 ```text
 financial-fraud-analytics/
 │
-├── data/
-│   ├── raw/                 # Raw CSVs and JSON files (git-ignored)
-│   └── cleaned/             # Processed CSVs generated by Phase 1
-│
 ├── notebooks/
-│   └── 01_data_preparation_and_cleaning.ipynb   # Data cleaning & JSON flattening notebook
-│
-├── scripts/
-│   ├── python/
-│   │   └── 02_ingest_to_ssms.py                 # Automated SQL Server ingestion script
-│   └── sql/
-│       ├── 01_create_database_and_staging.sql   # SSMS Table DDL & staging definitions
-│       ├── 02_bulk_insert_staging.sql          # Bulk data loading script
-│       ├── 03_indexing_and_verification.sql    # Non-clustered indexing script
-│       └── 04_create_star_schema_views.sql     # Relational Star Schema views
+│   └── 01_data_preparation_and_cleaning.ipynb   # Data cleaning, JSON flattening & ETL notebook
 │
 ├── powerbi/
-│   └── Fraud_Analytics_Report.pbix              # Interactive Power BI Report
+│   ├── Fraud_Analytics_Report.pbit              # Power BI Template File
+│   └── Fraud_Analytics_Report.pdf               # Executive Dashboard Export (PDF)
 │
 ├── docs/
 │   └── architecture_diagram.png                 # Workflow diagram asset

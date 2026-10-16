@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![SQL Server](https://img.shields.io/badge/SQL_Server-SSMS_22-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)](https://www.microsoft.com/sql-server)
 [![Power BI](https://img.shields.io/badge/Power_BI-DAX_%26_Power_Query-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
-[![Project Status](https://img.shields.io/badge/Status-In_Progress_(Phase_4_Complete)-00A86B?style=for-the-badge)](#-project-roadmap--phase-status)
+[![Project Status](https://img.shields.io/badge/Status-Phase_5_In_Progress-00A86B?style=for-the-badge)](#-project-roadmap--phase-status)
 
 An end-to-end financial data engineering and business intelligence solution designed to ingest semi-structured transaction data, construct a robust SQL relational star schema, and deliver an interactive executive dashboard for fraud detection and risk analytics.
 
@@ -27,7 +27,7 @@ Financial institutions handle millions of transactional events daily, where earl
 | :--- | :--- | :--- |
 | **ETL & Data Wrangling** | `Python` (`Pandas`, `NumPy`, `json`) | Ingestion, JSON flattening, type casting, missing value treatment, and clean CSV export. |
 | **Database & Modeling** | `SQL Server` (`SSMS 22`, `pyodbc`) | Staging table creation, relational keys, index optimization, and Star Schema analytical views. |
-| **Analytics & BI** | `Power BI` (`DAX`, `Power Query`) | Import Mode connection, data modeling ($1:*$), measure calculations, and executive dashboards. |
+| **Analytics & BI** | `Power BI` (`DAX`, `Power Query`) | Import Mode connection, data modeling ($1:*$), VertiPaq engine optimization, and executive dashboards. |
 | **Version Control** | `Git` / `GitHub` | Repository tracking, code versioning, and documentation. |
 
 ---
@@ -42,6 +42,7 @@ Financial institutions handle millions of transactional events daily, where earl
                                                                                                  ▼
 [ Power BI Dashboard ] <──(Import Mode)── [ SSMS: Star Schema ] ✅ <────────────── [ SSMS: Data Mart ] ✅
   Visualization & DAX                       Fact & Dimensions                      Views / Transformation
+  (Model Optimized ⚡)                       & Measures Created ✅
 ```
 
 ---
@@ -101,11 +102,19 @@ Financial institutions handle millions of transactional events daily, where earl
 ---
 
 ### ⑤ Phase 5: Interactive Visualization & Executive Dashboard
-**STATUS:** `PENDING ⏳ (Next Step)`
+**STATUS:** `IN PROGRESS` 🟡
 
-* **Page 1 — Executive Overview:** Top-level financial KPIs, processing volume trends, and macro fraud rates.
-* **Page 2 — Risk & Anomaly Analysis:** Day-of-week vs. Hour-of-day risk heatmaps, high-risk MCC categories, and transaction distribution spikes.
-* **Page 3 — Customer Demographics & Behavior:** User segmentation by income tier, age cohort, credit utilization rates, and spending patterns.
+* **VertiPaq Model Optimization:** ⚡ *Completed*
+  * Disabled global Auto Date/Time tables to prevent RAM overhead.
+  * Marked `vw_Dim_Calendar` as the official Date Table.
+  * Removed high-cardinality `Transaction_ID` and exact timestamp columns to drastically shrink dictionary size across 13.3M+ rows.
+  * Converted currency fields to `Fixed Decimal Number` (`Currency`) for tight encoding.
+  * Set geographic categories (`Latitude`, `Longitude`, `Merchant_State`) and hid foreign key fields.
+* **UI/UX Wireframing & Layout:** ✏️ *Sketched on Paper*
+* **Visual Build & DAX Integration:** ⏳ *In Progress*
+  * **Page 1 — Executive Overview:** High-level KPIs, processing volume trends, and macro fraud rates.
+  * **Page 2 — Risk & Anomaly Analysis:** Hour vs. Day-of-Week risk heatmaps, top high-risk MCC categories, and transaction distribution spikes.
+  * **Page 3 — Customer Demographics & Behavior:** User segmentation by income tier, age cohort, credit utilization rates, and spending patterns.
 
 ---
 
